@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeekAI Chat</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background: url('https://source.unsplash.com/1600x900/?AI,robot') no-repeat center center/cover;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    height: 100vh;
+    margin: 0;
+    text-align: center; /* Ensures all text aligns center */
+}
+
+h1 {
+    color: black;
+    margin-bottom: 20px; /* Spacing between h1 and chat container */
+}
+
+.chat-container {
+    width: 80%;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+        h2 {
+            color: #333;
+        }
+        .input-container {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response-wrapper {
+            margin-top: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .tick-mark {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: green;
+            color: white;
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .response-container {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+    </style>
+    <script>
+        async function sendPrompt() {
+            const question = document.getElementById("question").value;
+            if (!question) {
+                alert("Please enter a question!");
+                return;
+            }
+
+            const responseWrapper = document.getElementById("response-wrapper");
+            const responseContainer = document.getElementById("response-container");
+            // Show "Loading..." and make the response container visible
+        responseContainer.innerText = "Loading...";
+        responseContainer.style.display = "block";
+
+        try {
+            const response = await fetch("/api/ai/prompt?question=" + encodeURIComponent(question));
+            const result = await response.text();
+
+           // document.getElementById("response-message").innerText = "Your answer is ready";
+
+            // Replace "Loading..." with the actual result
+            responseContainer.innerText = result;
+            responseWrapper.style.display = "flex";
+        } catch (error) {
+            responseContainer.innerText = "Error fetching response. Try again!";
+        }
+
+        }
+    </script>
+</head>
+<body>
+<h1 style="view-transition-name: var(--vt-splash-screen-headline);">What can I help with?</h1>
+<div class="chat-container">
+
+    <h2>
+        <img src="/images/deepseek.png" alt="DeepSeek AI Logo" style="height: 50px; vertical-align: middle; margin-right: 10px;">
+        <img src="/images/springboot.png" alt="SpringBoot Logo" style="height: 50px; vertical-align: middle; margin-right: 10px;">
+    </h2>
+
+    <h2> Deep Seek AI Chat</h2>
+    <div class="input-container">
+        <input type="text" id="question" placeholder="Ask something...">
+        <button onclick="sendPrompt()">Send</button>
+    </div>
+
+    <div class="response-container" id="response-container"></div>
+</div>
+</body>
+</html>
