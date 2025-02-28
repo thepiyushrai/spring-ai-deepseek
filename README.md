@@ -46,3 +46,19 @@ Follow these steps to set up and run the project locally:
 ```bash
 git clone https://github.com/thepiyushrai/spring-ai-deepseek.git
 cd spring-ai-deepseek
+
+## 2. Install Dependencies
+mvn clean install
+
+## 3. Configure Ollama
+bash
+ollama serve
+
+## 4. Download the DeepSeek model (deepseek-r1:1.5b) using:
+bash
+
+ollama pull deepseek-r1:1.5b
+
+Verify that the Ollama server is running by checking http://localhost:11434/ (the default URL) in your browser or via a tool like curl.
+
+
